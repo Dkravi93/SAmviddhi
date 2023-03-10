@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
 router.get("/currency-exchange", async (req, res) => {
   try {
     const { from, to } = req.query;
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless : true});
     const page = await browser.newPage();
     await page.goto(ITEM_URL);
     await page.$eval(
@@ -51,7 +51,7 @@ router.get("/convert", async (req, res) => {
     const to = req.query.to;
     const amount = req.query.amount;
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless : true});
     const page = await browser.newPage();
     await page.goto(`${ITEM_URL}convert/?Amount=${amount}&From=${from}&To=${to}`);
     const element = await page.waitForSelector(
